@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  server:
+    container_name: 'apis'
+    networks:
+      - ostello
+    volumes:
+      - ./server:/app
+    build: ./
+    ports: 
+      - 4000:4000
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: 'mysql:latest'
+    restart: always
+    networks:
+      - ostello
+    volumes:
+      - /ostello:/db/data
+    environment:
+      MYSQL_USER: Harit
+      MYSQL_ROOT_PASSWORD: Harit1273#
+      MYSQL_DATABASE: ostello
+      MYSQL_PASSWORD: Harit1273#
+    ports:
+      - 3307:3306
+volumes:
+  db:
+networks:
+  ostello:
