@@ -1,4 +1,5 @@
 # ostello_user_management-apis
+
 # User Creation API Documentation
 
 ## API Endpoint
@@ -33,3 +34,21 @@ Example Request Body:
   "email": "john@example.com",
   "password": "securePassword"
 }
+
+# Delete User API
+
+This API is used to delete a user account. Authentication is required to access this endpoint.
+
+## Endpoint
+
+`DELETE /api/users/:id`
+
+- `:id` (required): The unique identifier of the user to be deleted.
+
+## Authentication
+
+To use this API, you must include authentication credentials in the request headers.
+
+Example Headers:
+```http
+Authorization: Bearer <your-access-token>
