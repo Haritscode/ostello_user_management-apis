@@ -2,7 +2,7 @@ const ErrorHandler = require('../../config/customErrorHandler.config')
 const userdb=require('../models/user.model')
 const getUsers=(req,res,next)=>{
     try{
-        userdb.findAll({attributes:['email','userName','name']}).then(result=>{
+        userdb.findAll({attributes:['email','userName','name','id']}).then(result=>{
             if(result){
                 const data=[]
                 result.map((user)=>{

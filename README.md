@@ -58,7 +58,16 @@ Authorization: Bearer <your-access-token>
 
 # Get User Information API
 
-This API is used to retrieve information about a user by their unique identifier.
+This API is used to retrieve information about a user by their unique identifier. Authentication is required to access this endpoint.
+
+## Authentication
+
+To use this API, you must include authentication credentials in the request headers.
+
+Example Headers:
+```http
+Authorization: Bearer <your-access-token>
+```
 
 ## Endpoint
 
@@ -100,5 +109,56 @@ This API is used to retrieve information about a user by their unique identifier
     ```json
     {
         "error": "An error occurred while fetching user information."
+    }
+    ```
+
+
+# Get Users API
+
+This API is used to retrieve a list of users with limited information (email, username, name, and id). No authentication is required to access this endpoint.
+
+## Endpoint
+
+`GET /api/users`
+
+## Request
+
+- Method: `GET`
+
+## Response
+
+- `200 OK`: If there are users in the database, the server will respond with a JSON array containing user objects, each with details including `email`, `userName`, `name`, and `id`.
+
+    Example Response:
+    ```json
+    [
+        {
+            "id": 1,
+            "email": "user1@example.com",
+            "userName": "user1",
+            "name": "John Doe"
+        },
+        {
+            "id": 2,
+            "email": "user2@example.com",
+            "userName": "user2",
+            "name": "Jane Smith"
+        }
+    ]
+    ```
+
+- `200 OK` (Empty Array): If there are no users in the database, the server will respond with an empty JSON array.
+
+    Example Response:
+    ```json
+    []
+    ```
+
+- `4xx Error`: If there are any errors during the retrieval process, the server will respond with an appropriate error message.
+
+    Example Error Response:
+    ```json
+    {
+        "error": "An error occurred while fetching user data."
     }
     ```
