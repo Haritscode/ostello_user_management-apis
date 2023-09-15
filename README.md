@@ -26,7 +26,7 @@ The request body should contain the following parameters:
 
 Example Request Body:
 
-json
+```json
 
 {
   "name": "John Doe",
@@ -34,6 +34,8 @@ json
   "email": "john@example.com",
   "password": "securePassword"
 }
+
+```
 
 # Delete User API
 
@@ -52,3 +54,51 @@ To use this API, you must include authentication credentials in the request head
 Example Headers:
 ```http
 Authorization: Bearer <your-access-token>
+```
+
+# Get User Information API
+
+This API is used to retrieve information about a user by their unique identifier.
+
+## Endpoint
+
+`GET /api/users/:id`
+
+- `:id` (required): The unique identifier of the user whose information you want to retrieve.
+
+## Request
+
+- Method: `GET`
+
+## Response
+
+- `200 OK`: If the user information is found, the server will respond with a JSON object containing the user's details, including `id`, `name`, `userName`, `email`, and `version`.
+
+    Example Response:
+    ```json
+    {
+        "id": 1,
+        "name": "John Doe",
+        "userName": "johndoe123",
+        "email": "johndoe@example.com",
+        "version": 2
+    }
+    ```
+
+- `404 Not Found`: If the user with the specified `id` is not found, the server will respond with an error message.
+
+    Example Error Response:
+    ```json
+    {
+        "error": "User Not Found"
+    }
+    ```
+
+- `4xx Error`: If there are any other errors during the retrieval process, the server will respond with an appropriate error message.
+
+    Example Error Response:
+    ```json
+    {
+        "error": "An error occurred while fetching user information."
+    }
+    ```
