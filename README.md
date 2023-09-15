@@ -26,7 +26,7 @@ The request body should contain the following parameters:
 
 Example Request Body:
 
-```json
+json
 
 {
   "name": "John Doe",
