@@ -34,27 +34,28 @@ Example Request Body:
   "email": "john@example.com",
   "password": "securePassword"
 }
-
 ```
+
 
 # Delete User API
 
-This API is used to delete a user account. Authentication is required to access this endpoint.
+This API allows a user to delete their own account details.
 
 ## Endpoint
 
 `DELETE /api/users/:id`
 
-- `:id` (required): The unique identifier of the user to be deleted.
+- `:id` (required): The unique identifier of the user whose account details will be deleted.
 
 ## Authentication
 
-To use this API, you must include authentication credentials in the request headers.
+To use this API, authentication is required. The user making the request must be authenticated, and their user ID must match the `:id` provided in the endpoint URL.
 
 Example Headers:
 ```http
 Authorization: Bearer <your-access-token>
 ```
+
 
 # Get User Information API
 
@@ -113,7 +114,8 @@ Authorization: Bearer <your-access-token>
     ```
 
 
-# Get Users API
+
+# Get All Users API
 
 This API is used to retrieve a list of users with limited information (email, username, name, and id). No authentication is required to access this endpoint.
 
@@ -162,3 +164,71 @@ This API is used to retrieve a list of users with limited information (email, us
         "error": "An error occurred while fetching user data."
     }
     ```
+
+
+# Update User Profile API
+
+This API allows an authenticated user to update their own profile information, including their name, username, email, and other attributes. Optimistic locking is applied to ensure data consistency.
+
+## Endpoint
+
+`PUT /api/users/:id`
+
+- `:id` (required): The unique identifier of the user whose profile will be updated.
+
+## Authentication
+
+To use this API, authentication is required. The user making the request must be authenticated, and their user ID must match the `:id` provided in the endpoint URL.
+
+Example Headers:
+```http
+Authorization: Bearer <your-access-token>
+```
+
+Example Request:
+  ```json
+  {
+    "id": 1,
+    "name": "Updated Name",
+    "userName": "updatedusername",
+    "email": "updated.email@example.com",
+    "version": 2
+  }
+  ```
+
+Example Response:
+
+  '200 OK': If the user making the request is authorized to update their own profile and the update is successful, the server will respond with a JSON object containing the updated user profile data.
+  ```json
+  {
+    "id": 1,
+    "name": "Updated Name",
+    "userName": "updatedusername",
+    "email": "updated.email@example.com",
+    "version": 3
+  }
+  ```
+
+  '401 Unauthorized': If the user making the request is not authorized to update the profile (e.g., trying to update another user's profile), the server will respond with an "Unauthorized" error.
+
+  ```json
+  {
+    "error": "Unauthorized"
+  }
+  ```
+
+  '409 Conflict': If optimistic locking is applied and the provided version does not match the current version in the database, the server will respond with a "Conflict" error.
+
+  ```json
+  {
+    "error": "Conflict - Data has been modified by another user."
+  }
+  ```
+
+  '4xx Error': If there are any other errors during the update process, the server will respond with an appropriate error message.
+  ```json
+  {
+    "error": "An error occurred while updating user profile."
+  }
+  ```
+Example Error Response:
